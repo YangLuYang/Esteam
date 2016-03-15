@@ -1,0 +1,52 @@
+img {
+    width: 80px;
+    height: 80px;
+    border: 1px solid #999;
+    background-color: rgb(238,238,238);   
+}
+.personal img {
+    display: block;
+    margin: 20px;
+}
+img#team-logo {
+    vertical-align: text-top;
+}
+#main,#left,#right,#center{
+    padding: 20px;
+    border: 1px solid #999;
+    background-color: rgb(238,238,238);
+}
+body {
+    margin: 20px;
+}
+#left {
+    margin-right: 20px;
+    z-index: 1;
+    width: 200px;
+    float: left;
+    background-color: white;
+}
+#right {
+    margin-left: 20px;
+    padding: 0;
+    z-index: -1;
+    width: 120px;
+    height: auto;
+    float: right;
+    background-color: white;
+}
+#center {
+    text-indent: 2em;
+    overflow: auto;
+    z-index: 0;
+    margin-left:260px;
+	margin-right:140px; 
+    line-height: 15px;
+    background-color: white;
+}
+#clear {
+    clear: both;
+}
+html{
+    min-width: 1000px;
+}
