@@ -20,14 +20,14 @@ body {
     margin: 20px;
 }
 #left {
-    margin-right: 20px;
+    /*margin-right: 20px;*/
     z-index: 1;
     width: 200px;
     float: left;
     background-color: white;
 }
 #right {
-    margin-left: 20px;
+    /*margin-left: 20px;*/
     padding: 0;
     z-index: -1;
     width: 120px;
@@ -47,6 +47,4 @@ body {
 #clear {
     clear: both;
 }
-html{
-    min-width: 1000px;
-}
+
