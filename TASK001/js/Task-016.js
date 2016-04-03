@@ -19,9 +19,9 @@ function addAqiData() {
 	var airReg = /[^0-9]/g;
 	if(city.search(cityReg) == -1){
 		if(value.search(airReg) == -1){
-		aqiData[city]=value;
-    }else{ alert("空气质量指数必须为整数"); }
-  }else{ alert("城市名必须为中英文字符"); }
+			aqiData[city]=value;
+		}else{ alert("空气质量指数必须为整数"); }
+	}else{ alert("城市名必须为中英文字符"); }
 		
 	
 }
