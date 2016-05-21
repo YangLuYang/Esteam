@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task-030</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        input,textarea {
+            /*outline: none;*/
+        }
+        .wrap {
+            position: relative;
+            width: 100%;
+            height: 500px;
+        }
+        form {
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            margin-left: -185px;
+        }
+        input {
+            margin: 0 15px;
+            border: 2px solid #ccc;
+        }
+        #submit {
+            padding: 5px;
+            float: right;
+        }
+        .tips {
+            font-size: 14px;
+            margin-left: 88px;
+        }
+        label {
+            text-align: right;
+        }
+        .rightTips {
+            color: #5bc23f;
+        }
+        .wrongTips {
+            color: #df0110;
+        }
+        .rightInput {
+            border: 1px solid #5bc23f;
+            outline: 1px solid #5bc23f;
+        }
+        .wrongInput {
+            border: 1px solid #df0110;
+            outline: 1px solid #df0110;
+        }
+    </style>
+</head>
+<body>
+<div class="wrap">
+    <form id="log">
+        <p><label>&nbsp;用户名<input type="txt" id="name" autocomplete="off"  onfocus="focusOn(0)" onblur="changeOn(0)" class="normalInput"></label></p>
+        <p class="tips normalTips">&nbsp;<!--必填，长度为4~16个字符--></p>
+        <p><label>&nbsp;&nbsp;密码<input type="password" id="password" autocomplete="off" onfocus="focusOn(1)" onblur="changeOn(1)" class="normalInput"></label></p>
+        <p class="tips normalTips">&nbsp;<!--密码长度为8~16个字符--></p>
+        <p><label>密码确认<input type="password" id="secondPassword" autocomplete="off" onfocus="focusOn(2)" onblur="changeOn(2)" class="normalInput"></label></p>
+        <p class="tips normalTips">&nbsp;<!--重复密码--></p>
+        <p><label>&nbsp;&nbsp;邮箱<input type="email" id="email" autocomplete="off" onfocus="focusOn(3)" onblur="changeOn(3)" class="normalInput"></label></p>
+        <p class="tips normalTips">&nbsp;<!--输入正确邮箱--></p>
+        <p><label>&nbsp;&nbsp;手机<input type="tel" id="tel" autocomplete="off" onfocus="focusOn(4)" onblur="changeOn(4)" class="normalInput"></label></p>
+        <p class="tips normalTips">&nbsp;<!--输入11位手机号码--></p>
+        <input type="button" id="submit" value="验证" onclick="verifyAll()">
+    </form>
+</div>
+<script src="js/Task-030.js"></script>
+</body>
+</html>

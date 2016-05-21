@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task-022</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        div {
+            display: flex;
+            justify-content: space-around;
+            border: 1px solid #8c8c8c;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .one {
+            float: left;
+            position: absolute;
+            margin-left: -160px;
+            left: 50%;
+        }
+        .btn {
+            position: absolute;
+            top: 150px;
+            left: 50%;
+            margin-left: -160px;
+        }
+        .btn button {
+            padding: 10px;
+            margin: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="one">
+    <div class="two">
+        <div class="four"><div class="eight"></div></div>
+        <div class="five"><div class="nine"></div></div>
+    </div>
+    <div class="three">
+        <div class="six"><div class="ten"></div></div>
+        <div class="seven"><div class="ele"></div></div>
+    </div>
+</div>
+<div class="btn">
+    <button id="pre" onclick="preOrder(root),showOut()">前序遍历</button>
+    <button id="in" onclick="inOrder(root),showOut()">中序遍历</button>
+    <button id="post" onclick="postOrder(root),showOut()">后序遍历</button>
+</div>
+<script>
+    var current,timer,
+            stack = [],
+            root = document.getElementsByClassName("one")[0]; //取得根节点
+
+    function preOrder(node){
+        if(node){
+            stack.push(node);
+            arguments.callee(node.firstElementChild);
+            arguments.callee(node.lastElementChild);
+        }
+    }
+    function inOrder(node){
+        if(node){
+            arguments.callee(node.firstElementChild);
+            stack.push(node);
+            arguments.callee(node.lastElementChild);
+        }
+    }
+    function postOrder(node){
+        if(node){
+            arguments.callee(node.firstElementChild);
+            arguments.callee(node.lastElementChild);
+            stack.push(node);
+        }
+    }
+
+    function showOut(){
+        current = stack.shift();
+        if(current){
+            current.style.backgroundColor = '#00B2EE';
+            timer = setTimeout(function(){
+                current.style.backgroundColor = '#fff';
+                showOut();
+            },1000);
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="one">
+        <div class="two">
+            <div class="four"><div class="eight"></div></div>
+            <div class="five"><div class="nine"></div></div>
+        </div>
+        <div class="three">
+            <div class="six"><div class="ten"></div></div>
+            <div class="seven"><div class="ele"></div></div>
+        </div>
+    </div>
+    <script>
+        var root=document.getElementsByClassName("one")[0];
+        var one=root.getElementsByTagName("div")[0];
+        var two=root.getElementsByTagName("div")[1];
+        two.getElementsByTagName("div")[0].style.color="red";
+        one.getElementsByTagName("div")[0].style.display="none";
+        alert(one.innerHTML);
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task-022</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        div {
+            display: flex;
+            justify-content: space-around;
+            border: 1px solid #8c8c8c;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .one {
+            float: left;
+            position: absolute;
+            margin-left: -160px;
+            left: 50%;
+        }
+        .btn {
+            position: absolute;
+            top: 150px;
+            left: 50%;
+            margin-left: -200px;
+        }
+        .btn button {
+            padding: 10px;
+            margin: 15px;
+        }
+        /*.active {*/
+            /*box-shadow: #0f0f0f 0 0 20px inset;*/
+        /*}*/
+    </style>
+</head>
+<body>
+    <div class="one">
+        <div class="two">
+             <div class="four"><div class="eight"></div></div>
+             <div class="five"><div class="nine"></div></div>
+        </div>
+        <div class="three">
+            <div class="six"><div class="ten"></div></div>
+            <div class="seven"><div class="ele"></div></div>
+        </div>
+    </div>
+    <div class="btn">
+        <button id="pre" onclick="preOrder(one)">前序遍历</button>
+        <button id="in" onclick="inOrder(one)">中序遍历</button>
+        <button id="post" onclick="postOrder(one)">后序遍历</button>
+        <button id="reset" onclick="resetAll()">重置</button>
+    </div>
+    <script>
+        //添加到队列
+        var array=[];
+        var node={
+            thisNode: document.getElementsByClassName("one")[0],
+            fatherNode: undefined,
+            leftNode: document.getElementsByClassName("two")[0],
+            rightNode: document.getElementsByClassName("three")[0],
+            show: function() {
+                array.push(this.thisNode);
+                this.thisNode.style.boxShadow="#0f0f0f 0 0 20px inset";
+                this.thisNode.className+=" active";
+            },
+        };
+//        if(array.length==11){
+//            display();
+//        }
+//        function display() {
+//            var head = array.shift(); //出队
+//            if (head) {
+//                head.style.backgroundColor = "#0f0f0f";
+//                var timer = setTimeout(function(){
+//                    display; //递归调用show，使要显示的节点不停出队显示，直至为空
+//                }, 1000);
+//            }
+//        }
+
+        var one=Object.create(node);
+        var two=Object.create(node);
+        var three=Object.create(node);
+        var four=Object.create(node);
+        var five=Object.create(node);
+        var six=Object.create(node);
+        var seven=Object.create(node);
+        var eight=Object.create(node);
+        var nine=Object.create(node);
+        var ten=Object.create(node);
+        var ele=Object.create(node);
+        two.thisNode=document.getElementsByClassName("two")[0];
+        three.thisNode=document.getElementsByClassName("three")[0];
+        four.thisNode=document.getElementsByClassName("four")[0];
+        five.thisNode=document.getElementsByClassName("five")[0];
+        six.thisNode=document.getElementsByClassName("six")[0];
+        seven.thisNode=document.getElementsByClassName("seven")[0];
+        eight.thisNode=document.getElementsByClassName("eight")[0];
+        nine.thisNode=document.getElementsByClassName("nine")[0];
+        ten.thisNode=document.getElementsByClassName("ten")[0];
+        ele.thisNode=document.getElementsByClassName("ele")[0];
+
+        one.leftNode=two;
+        one.rightNode=three;
+        two.leftNode=four;
+        two.rightNode=five;
+        three.leftNode=six;
+        three.rightNode=seven;
+        four.leftNode=eight;
+        five.leftNode=nine;
+        six.leftNode=ten;
+        seven.leftNode=ele;
+
+        //先序遍历
+        function preOrder(node) {
+            if (node.leftNode || node.rightNode) {
+                node.show();
+                preOrder(node.leftNode);
+                preOrder(node.rightNode);
+            }
+        }
+        //使用递归方式实现中序遍历
+        function inOrder(node){
+            if(node.leftNode||node.rightNode){
+                inOrder(node.leftNode);//先访问左子树
+                node.show();//再访问根节点
+                inOrder(node.rightNode);//最后访问右子树
+            }
+        }
+        //后序遍历
+        function postOrder(node){
+            if(node.leftNode||node.rightNode){
+                postOrder(node.leftNode);
+                postOrder(node.rightNode);
+                node.show();
+            }
+        }
+        //重置
+        function resetAll() {
+            var allActive=document.getElementsByClassName("active");
+            alert(allActive.length);
+            for(var i=0;i<allActive.length;i++){
+                allActive[i].style="";
+            }
+        }
+    </script>
+</body>
+</html>

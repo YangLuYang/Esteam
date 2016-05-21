@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task-024</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #root {
+            float: left;
+        }
+        div {
+            /*display: flex;*/
+            /*justify-content: space-around;*/
+            border: 1px solid #8c8c8c;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .btn {
+            float: left;
+        }
+        .btn button {
+            display: block;
+            padding: 10px;
+            margin: 15px;
+        }
+        #divArea {
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<form id="divArea">
+    <div id="root" title="devices">devices
+        <div title="pc">pc
+            <div title="lenovo">lenovo
+                <div title="thinkpad">thinkpad</div>
+            </div>
+            <div title="dell">dell
+                <div title="alienware">alienware</div>
+            </div>
+            <div title="asus">asus
+                <div title="rog">rog</div>
+            </div>
+        </div>
+        <div title="smartphone">smartphone
+            <div title="apple">apple
+                <div title="ip5se">ip5se</div>
+                <div title="ip6p">ip6p</div>
+            </div>
+            <div title="meizu">meizu
+                <div title="pro6">pro6</div>
+            </div>
+        </div>
+        <div title="peripherals">peripherals
+            <div title="logitech">logitech
+                <div title="g402">g402</div>
+            </div>
+            <div title="Corsair">Corsair
+                <div title="k70">k70</div>
+            </div>
+            <div title="SteelSeries">SteelSeries</div>
+        </div>
+    </div>
+</form>
+    <div class="btn" >
+        <button id="pre" onclick="reSet(),bFS(root),showOut()">广度优先查找</button>
+        <input id="input" placeholder="which u want get">
+        <button id="in" onclick="reSet(),dFs(root),showOut(dFsQueue)">深度优先查找</button>
+        <button id="reset" onclick="reSet()">重置遍历与选择</button>
+        <button id="deleteNodes" onclick="deleteNodes()">删除所选节点及其子节点</button>
+        <input id="add" placeholder="what u want add">
+        <button id="addNodes" onclick="addNodes(selectNode,getTxt())">在选中节点下增加节点</button>
+        <button id="collapse" onclick="collapse(selectNode)">折叠所选节点</button>
+        <button id="spread" onclick="spread(selectNode)">展开所选节点</button>
+    </div>
+
+<script>
+    var queue=[],current,
+            root=document.getElementById("root");
+    //广度优先
+    //        1：把当前节点放入队列，如果节点有nextElementSibling，访问旁边节点并放入队列，
+    //        当节点的nextElementSibling为假时，说明当前层已经访问完毕，
+    //        2：队列shift第一个出来（即当前层的第一个节点)，通过firstElementChild到达下一层，重复1操作
+    //        重复1，2操作，直到队列为空
+    var bFsQueue=[];
+    function bFS(node) {
+        if(node){
+            bFsQueue.push(node);
+            queue.push(node);
+            if(node.nextElementSibling){
+                arguments.callee(node.nextElementSibling);
+            }
+            node=bFsQueue.shift();
+            arguments.callee(node.firstElementChild);
+        }
+    }
+
+    //深度优先遍历
+    //        1.把node push进队列，通过.firstElementChild 到达下一层，直到没有子节点
+    //        2.队列shift第一个出来，即返回最开始的层级，通过nextElementSibling，访问旁边节点并放入队列
+    //        3.循环1.2
+    var dFsQueue=[];
+    function dFs(node) {
+        if(node){
+            dFsQueue.push(node);
+            queue.push(node);
+            if(node.firstElementChild){
+                arguments.callee(node.firstElementChild);
+            }
+            node=dFsQueue.pop();
+            arguments.callee(node.nextElementSibling);
+        }
+    }
+    function getTile() {
+        return document.getElementById("input").value;
+    }
+    function showOut(){
+        if(getTile()==""){
+            alert("请输入要查询的值");
+            return;
+        }
+        current = queue.shift();
+        if(current){
+            current.style.backgroundColor = '#00B2EE';
+            timer = setTimeout(function(){
+                current.style.backgroundColor = '#fff';
+                showOut();
+            },600);
+            if(current.title==getTile()){
+                clearInterval(timer);
+                document.getElementById("input").value="";
+                alert("get it");
+                return;
+            }
+        }else{
+            alert("can't get it");
+        }
+    }
+    function reSet() {
+        dFsQueue=[],bFsQueue=[],queue=[],deleteQueue=[];
+        let allDiv=root.getElementsByTagName("div");
+        for(let i=0;i<allDiv.length;i++){
+            allDiv[i].style.backgroundColor="#fff";
+        }
+//        document.getElementById("input").value="";
+        var allNodes=document.getElementById("divArea").getElementsByTagName("div");
+        for(let i=0;i<allNodes.length;i++){
+            allNodes[i].style.backgroundColor="#fff";
+        };
+    }
+    var selectNode;//被选中的节点
+    //添加点击选中
+    function selectNodes() {
+        var allNodes=document.getElementById("divArea").getElementsByTagName("div");
+//        alert(allNodes.length);
+        for(let i=0;i<allNodes.length;i++){
+            allNodes[i].addEventListener("click",function (e) {
+                reSet();
+                this.style.backgroundColor = '#fef9d1';
+                selectNode=this;
+                e.stopPropagation();//阻止事件冒泡
+            },false);
+        }
+    };
+    selectNodes();
+    //点击删除功能
+    var deleteQueue=[];
+    function deleteNodes() {
+        selectNodesDFS(selectNode);//获取要删除的节点集合
+        for(let i=0;i<deleteQueue.length;i++){
+            deleteQueue[i].remove();
+        }
+    }
+    //深度优先遍历获得全部子节点
+    var flag=0;
+    function selectNodesDFS(node) {
+        if(node){
+            dFsQueue.push(node);
+            deleteQueue.push(node);
+            if(node.firstElementChild){
+                arguments.callee(node.firstElementChild);
+            }
+            if(flag!=0){
+                node=dFsQueue.pop();
+                arguments.callee(node.nextElementSibling);
+            }
+            flag++;
+        }
+    }
+    //添加节点及内容
+    function addNodes(node,txt) {
+        var newNode=document.createElement("div");
+        newNode.title=txt;
+        newNode.innerHTML=txt;
+        node.appendChild(newNode);
+        selectNodes();
+        document.getElementById("add").value="";
+    }
+    function getTxt() {
+        let txt=document.getElementById("add").value;
+        return txt;
+    }
+    //点击折叠功能
+    var isCollapse=false;
+    function collapse(selectNode) {
+        collapseNodesDFS(selectNode.firstElementChild);
+        for(let i=0;i<collapseQueue.length;i++){
+            collapseQueue[i].style.display="none";
+        }
+    }
+    var collapseQueue=[];
+    function collapseNodesDFS(node) {
+        if(node){
+            dFsQueue.push(node);
+            collapseQueue.push(node);
+            if(node.firstElementChild){
+                arguments.callee(node.firstElementChild);
+            }
+            node=dFsQueue.pop();
+            arguments.callee(node.nextElementSibling);
+        }
+    }
+    //点击展开
+    function spread(selectNode) {
+        collapseNodesDFS(selectNode.firstElementChild);
+        for(let i=0;i<collapseQueue.length;i++){
+            collapseQueue[i].style.display="block";
+        }
+    }
+</script>
+</body>
+</html>
